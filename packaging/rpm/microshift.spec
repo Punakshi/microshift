@@ -217,7 +217,7 @@ fi
 
 %files selinux
 
-%/var/run/patu
+#/var/run/patu
 /var/run/kubelet
 /var/lib/kubelet/pods
 /var/run/secrets/kubernetes.io/serviceaccount
