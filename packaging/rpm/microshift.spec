@@ -19,13 +19,13 @@
 %define container_policy_epoch 2
 %define microshift_relabel_files() \
    mkdir -p /var/hpvolumes; \
-  % mkdir -p /var/run/patu; \
+  # mkdir -p /var/run/patu; \
    mkdir -p /var/run/kubelet; \
    mkdir -p /var/lib/kubelet/pods; \
    mkdir -p /var/run/secrets/kubernetes.io/serviceaccount; \
    restorecon -R /var/hpvolumes; \
    restorecon -R /var/run/kubelet; \
-  % restorecon -R /var/run/patu; \
+  # restorecon -R /var/run/patu; \
    restorecon -R /var/lib/kubelet/pods; \
    restorecon -R /var/run/secrets/kubernetes.io/serviceaccount
 
