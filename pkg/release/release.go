@@ -19,11 +19,11 @@ package release
 var Base = "4.10.16"
 
 var Image = map[string]string{
-	"cli":                           "quay.io/microshift/cli:" + Base,
-	"coredns":                       "quay.io/microshift/coredns:" + Base,
-	"haproxy_router":                "quay.io/microshift/haproxy-router:" + Base,
-	"kube_flannel":                  "quay.io/microshift/flannel:" + Base,
-	"kube_flannel_cni":              "quay.io/microshift/flannel-cni:v0.14.0",
+	"cli":            "quay.io/microshift/cli:" + Base,
+	"coredns":        "quay.io/microshift/coredns:" + Base,
+	"haproxy_router": "quay.io/microshift/haproxy-router:" + Base,
+	//"kube_flannel":                  "quay.io/microshift/flannel:" + Base,
+	//"kube_flannel_cni":              "quay.io/microshift/flannel-cni:v0.14.0",
 	"kube_rbac_proxy":               "quay.io/microshift/kube-rbac-proxy:" + Base,
 	"kubevirt_hostpath_provisioner": "quay.io/microshift/hostpath-provisioner:" + Base,
 	"pause":                         "quay.io/microshift/pause:" + Base,
