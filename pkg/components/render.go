@@ -8,6 +8,8 @@ import (
 	"github.com/openshift/microshift/pkg/release"
 )
 
+
+// TODO: Change as per patu.yaml
 func renderServiceCAController(b []byte, p assets.RenderParams) ([]byte, error) {
 	data := struct {
 		ReleaseImage           assets.RenderParams

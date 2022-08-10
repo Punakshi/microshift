@@ -1,0 +1,27 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: patu-cni-conf
+  namespace: kube-system
+  labels:
+    tier: node
+    app: patu
+data:
+  patu-cni-conf.json: |
+    {
+      "cniVersion": "0.3.1",
+      "name": "patu-network",
+      "type": "patu",
+      "bridge": "patux",
+      "isGateway": true,
+      "ipam": {
+        "type": "host-local",
+        "ranges": [
+            [{ "subnet": "10.200.0.0/16" }]
+        ],
+        "routes": [
+            { "dst": "0.0.0.0/0" }
+        ]
+      }
+    }

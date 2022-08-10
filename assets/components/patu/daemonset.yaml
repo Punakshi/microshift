@@ -1,0 +1,109 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: patu
+  namespace: kube-system
+  labels:
+    app: patu
+spec:
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: patu
+  template:
+    metadata:
+      labels:
+        app: patu
+    spec:
+      hostNetwork: true
+      initContainers:
+      - name: install-patu-cni
+        image: "ghcr.io/redhat-et/patu:latest"
+        imagePullPolicy: Always
+        command:
+        - cp
+        args:
+        - -f
+        - /cni/patu
+        - /opt/cni/bin/patu
+        volumeMounts:
+          - name: host-opt-cni-bin
+            mountPath: /opt/cni/bin/
+      - name: install-patu-conf
+        image: "ghcr.io/redhat-et/patu:latest"
+        imagePullPolicy: Always
+        command:
+        - cp
+        args:
+        - -f
+        - /etc/patu/patu-cni-conf.json
+        - /etc/cni/net.d/10-patu.conf
+        volumeMounts:
+          - name: host-etc-cni-net
+            mountPath: /etc/cni/net.d
+          - name: patu-conf
+            mountPath: /etc/patu/
+      containers:
+      - image: "ghcr.io/redhat-et/patu:latest"
+        imagePullPolicy: Always
+        name: patu
+        args:
+        - /cni/patud
+        - -d
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "/usr/local/sbin/post-cni.sh"]
+        resources: 
+          requests:
+            cpu: 100m
+            memory: 200Mi
+          limits:
+            cpu: 100m
+            memory: 200Mi
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - name: host-sys-fs-cgroup
+            mountPath: /sys/fs/cgroup
+          - name: host-opt-cni-bin
+            mountPath: /opt/cni/bin
+          - name: host-etc-cni-net
+            mountPath: /etc/cni/net.d  
+          - name: host-proc
+            mountPath: /proc
+          - name: host-var-run
+            mountPath: /var/run
+            mountPropagation: Bidirectional
+      
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        kubernetes.io/os: linux
+      priorityClassName: system-node-critical
+      restartPolicy: Always
+      serviceAccount: patu
+      serviceAccountName: patu
+      tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      - operator: Exists
+      volumes:
+      - name: host-sys-fs-cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+      - name: host-proc
+        hostPath:
+          path: /proc
+      - name: host-opt-cni-bin
+        hostPath:
+          path: /opt/cni/bin
+      - name: host-etc-cni-net
+        hostPath:
+          path: /etc/cni/net.d
+      - name: host-var-run
+        hostPath:
+          path: /var/run
+      - name: patu-conf
+        configMap:
+          name: patu-cni-conf

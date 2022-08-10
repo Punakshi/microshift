@@ -27,8 +27,8 @@ func StartComponents(cfg *config.MicroshiftConfig) error {
 		return err
 	}
 
-	if err := startOVNKubernetes(cfg, cfg.DataDir+"/resources/kubeadmin/kubeconfig"); err != nil {
-		klog.Warningf("Failed to start OVNKubernetes: %v", err)
+	if err := startPatu(cfg, cfg.DataDir+"/resources/kubeadmin/kubeconfig"); err != nil {
+		klog.Warningf("Failed to start PATU: %v", err)
 		return err
 	}
 	return nil

@@ -25,7 +25,7 @@ var Image = map[string]string{
 	"kube_rbac_proxy":         "quay.io/microshift/kube-rbac-proxy:" + Base,
 	"pause":                   "quay.io/microshift/pause:" + Base,
 	"service_ca_operator":     "quay.io/microshift/service-ca-operator:" + Base,
-	"ovn_kubernetes":          "quay.io/microshift/ovn-kubernetes-singlenode:" + Base,
+	"patu":                    "ghcr.io/redhat-et/patu:latest",
 	"odf_topolvm":             "quay.io/microshift/odf-topolvm-rhel8" + Base,
 	"odf_lvm_operator":        "quay.io/microshift/odf-lvm-rhel8-operator" + Base,
 	"ose_csi_ext_provisioner": "quay.io/microshift/ose-csi-external-provisioner" + Base,

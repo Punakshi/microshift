@@ -29,17 +29,13 @@ sudo bash -c "
     crio wipe -f &>/dev/null
     systemctl restart crio
 
-    echo Killing conmon, pause and OVN processes
+    echo Killing conmon, pause
     ovs-vsctl del-br br-int
     pkill -9 conmon
     pkill -9 pause
-    pkill -9 ovn-controller
-    pkill -9 ovn-northd
-    pkill -9 ovsdb-server
 
-    echo Removing MicroShift and OVN configuration
-    rm -rf /var/lib/{microshift,ovnk}
-    rm -rf /var/run/ovn
+    echo Removing MicroShift
+    rm -rf /var/lib/microshift
 
     echo Cleanup succeeded
 "
